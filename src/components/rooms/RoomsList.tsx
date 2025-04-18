@@ -1,7 +1,9 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BedDouble, Bath, Wifi, Coffee } from "lucide-react";
+import { BedDouble, Bath, Wifi, Coffee, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface RoomFeature {
   icon: JSX.Element;
@@ -16,14 +18,19 @@ interface Room {
   size: string;
   image: string;
   features: RoomFeature[];
+  longDescription: string;
 }
 
 const RoomsList = () => {
+  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
+  const navigate = useNavigate();
+
   const rooms: Room[] = [
     {
       id: 1,
       name: "Classic Zimmer",
-      description: "Unser Classic Zimmer bietet den perfekten Rahmen für einen komfortablen Aufenthalt mit stilvollem Ambiente.",
+      description: "Unser Classic Zimmer bietet den perfekten Rahmen für einen komfortablen Aufenthalt.",
+      longDescription: "Unser Classic Zimmer bietet den perfekten Rahmen für einen komfortablen Aufenthalt mit stilvollem Ambiente. Genießen Sie die moderne Ausstattung und die harmonische Atmosphäre. Das Zimmer verfügt über ein luxuriöses Kingsize-Bett, ein elegantes Badezimmer mit Regendusche und einen gemütlichen Sitzbereich.",
       price: "ab €199",
       size: "28m²",
       image: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
@@ -64,44 +71,89 @@ const RoomsList = () => {
     },
   ];
 
+  const handleBookClick = () => {
+    navigate("/booking");
+  };
+
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {rooms.map((room) => (
-            <Card key={room.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
-              <div className="relative h-64">
-                <img
-                  src={room.image}
-                  alt={room.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <CardHeader>
-                <CardTitle className="flex justify-between items-center">
-                  <span className="font-serif text-2xl">{room.name}</span>
-                  <span className="text-gold-600 font-semibold">{room.price}</span>
-                </CardTitle>
-                <p className="text-sm text-muted-foreground">
-                  {room.size}
-                </p>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-6">{room.description}</p>
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                  {room.features.map((feature, index) => (
-                    <div key={index} className="flex items-center gap-2 text-sm text-gray-600">
-                      {feature.icon}
-                      {feature.text}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Left Column - Room List */}
+          <div className="space-y-4">
+            {rooms.map((room) => (
+              <Card 
+                key={room.id} 
+                className={`cursor-pointer transition-all duration-300 ${
+                  selectedRoom?.id === room.id 
+                    ? 'ring-2 ring-gold-500' 
+                    : 'hover:shadow-md'
+                }`}
+                onClick={() => setSelectedRoom(room)}
+              >
+                <CardContent className="p-4">
+                  <div className="relative h-48 mb-4">
+                    <img
+                      src={room.image}
+                      alt={room.name}
+                      className="w-full h-full object-cover rounded-md"
+                    />
+                  </div>
+                  <h3 className="font-serif text-xl font-bold text-hotel-800 mb-2">
+                    {room.name}
+                  </h3>
+                  <p className="text-gold-600 font-semibold">{room.price}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Right Column - Room Details */}
+          <div className="md:col-span-2">
+            {selectedRoom ? (
+              <Card className="h-full">
+                <CardContent className="p-6">
+                  <div className="relative h-96 mb-6">
+                    <img
+                      src={selectedRoom.image}
+                      alt={selectedRoom.name}
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </div>
+                  <div className="space-y-6">
+                    <div className="flex justify-between items-start">
+                      <h2 className="font-serif text-3xl font-bold text-hotel-800">
+                        {selectedRoom.name}
+                      </h2>
+                      <p className="text-2xl font-bold text-gold-600">
+                        {selectedRoom.price}
+                      </p>
                     </div>
-                  ))}
-                </div>
-                <Button className="w-full bg-hotel-800 hover:bg-hotel-900">
-                  Details & Buchung
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+                    <p className="text-gray-600">{selectedRoom.longDescription}</p>
+                    <div className="grid grid-cols-2 gap-4">
+                      {selectedRoom.features.map((feature, index) => (
+                        <div key={index} className="flex items-center gap-2 text-gray-600">
+                          {feature.icon}
+                          {feature.text}
+                        </div>
+                      ))}
+                    </div>
+                    <Button 
+                      className="w-full bg-gold-600 hover:bg-gold-700 text-white"
+                      onClick={handleBookClick}
+                    >
+                      Jetzt Buchen
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="h-full flex items-center justify-center text-gray-500">
+                Bitte wählen Sie ein Zimmer aus der Liste aus, um Details anzuzeigen.
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>

@@ -1,6 +1,6 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface Room {
   id: number;
@@ -11,6 +11,16 @@ interface Room {
 }
 
 const RoomShowcase = () => {
+  const navigate = useNavigate();
+
+  const handleRoomsClick = () => {
+    navigate("/rooms");
+  };
+
+  const handleBookingClick = () => {
+    navigate("/booking");
+  };
+
   const featuredRooms: Room[] = [
     {
       id: 1,
@@ -38,7 +48,6 @@ const RoomShowcase = () => {
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-hotel-900 mb-4">
             Unsere Exklusiven Zimmer
@@ -49,7 +58,6 @@ const RoomShowcase = () => {
           </p>
         </div>
 
-        {/* Room Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredRooms.map((room) => (
             <div key={room.id} className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col h-full">
@@ -66,8 +74,11 @@ const RoomShowcase = () => {
                 <p className="text-gold-600 font-semibold mt-auto">{room.price}</p>
               </div>
               <div className="px-6 pb-6 pt-0">
-                <Button className="w-full bg-hotel-800 hover:bg-hotel-900 text-white flex items-center justify-center">
-                  Details Ansehen
+                <Button 
+                  className="w-full bg-hotel-800 hover:bg-hotel-900 text-white flex items-center justify-center"
+                  onClick={handleBookingClick}
+                >
+                  Details & Buchung
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
@@ -75,9 +86,11 @@ const RoomShowcase = () => {
           ))}
         </div>
 
-        {/* View All Button */}
         <div className="text-center mt-12">
-          <Button className="bg-transparent hover:bg-gold-50 text-gold-600 border border-gold-600 px-8">
+          <Button 
+            className="bg-transparent hover:bg-gold-50 text-gold-600 border border-gold-600 px-8"
+            onClick={handleRoomsClick}
+          >
             Alle Zimmer & Suiten Ansehen
           </Button>
         </div>

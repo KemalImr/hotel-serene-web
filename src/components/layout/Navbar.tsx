@@ -1,14 +1,18 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleBookingClick = () => {
+    navigate("/booking");
   };
 
   return (
@@ -40,7 +44,10 @@ const Navbar = () => {
             <Link to="/contact" className="font-medium text-hotel-600 hover:text-gold-600 transition-colors">
               Kontakt
             </Link>
-            <Button className="bg-gold-600 hover:bg-gold-700 text-white">
+            <Button 
+              className="bg-gold-600 hover:bg-gold-700 text-white"
+              onClick={handleBookingClick}
+            >
               Jetzt Buchen
             </Button>
           </div>
