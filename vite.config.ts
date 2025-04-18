@@ -5,7 +5,6 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '/hotel-serene-web/', // GitHub Pages Repository Name
   server: {
     host: "::",
     port: 8080,

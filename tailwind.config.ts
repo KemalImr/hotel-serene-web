@@ -61,36 +61,7 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				},
-                hotel: {
-                    50: '#f5f5f5',
-                    100: '#e6e6e6',
-                    200: '#cccccc',
-                    300: '#b3b3b3',
-                    400: '#999999',
-                    500: '#808080',
-                    600: '#666666',
-                    700: '#4d4d4d',
-                    800: '#333333',
-                    900: '#1a1a1a',
-                    950: '#0d0d0d',
-                },
-                gold: {
-                    50: '#fbf8f1',
-                    100: '#f6efd8',
-                    200: '#eedfb2',
-                    300: '#e5cb81',
-                    400: '#dbb651',
-                    500: '#d4a72e',
-                    600: '#be8f25',
-                    700: '#9e721f',
-                    800: '#7e5b20',
-                    900: '#664a1c',
-                }
-			},
-			fontFamily: {
-                sans: ['Inter', 'sans-serif'],
-                serif: ['Playfair Display', 'serif'],
+				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
