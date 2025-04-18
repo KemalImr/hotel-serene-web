@@ -1,7 +1,14 @@
 
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const RoomHero = () => {
+  const navigate = useNavigate();
+  
+  const handleBookingClick = () => {
+    navigate("/booking");
+  };
+  
   return (
     <section className="relative bg-gray-900 h-[60vh]">
       <div
@@ -21,7 +28,10 @@ const RoomHero = () => {
           Entdecken Sie unsere exklusiven Unterkünfte, die höchsten Komfort mit elegantem Design verbinden.
           Jedes Zimmer wurde sorgfältig gestaltet, um Ihnen einen unvergesslichen Aufenthalt zu garantieren.
         </p>
-        <Button className="w-fit bg-gold-600 hover:bg-gold-700 text-white">
+        <Button 
+          onClick={handleBookingClick}
+          className="w-fit bg-gold-600 hover:bg-gold-700 text-white"
+        >
           Jetzt Buchen
         </Button>
       </div>
